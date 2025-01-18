@@ -6,9 +6,10 @@
   "author": "Aryan Dev <103744719+Aaryan-Dev@users.noreply.github.com>",
   "license": "MIT",
   "scripts": {
-  "commit": "git add . && yarn cz"
+    "commit": "git add . && yarn cz"
   },
   "dependencies": {
+    "apollo-server": "^3.13.0",
     "bcrypt": "^5.1.1",
     "commitizen": "^4.3.1",
     "cors": "^2.8.5",
@@ -19,9 +20,9 @@
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.9.5"
   },
-    "devDependencies": {
-      "cz-conventional-changelog": "^3.3.0"
-    },
+  "devDependencies": {
+    "cz-conventional-changelog": "^3.3.0"
+  },
   "config": {
     "commitizen": {
       "path": "./node_modules/cz-conventional-changelog"
