@@ -81,9 +81,13 @@ const Mutation = new GraphQLObjectType({
         await newUser.save();
 
         // Generate JWT token
-        const token = jwt.sign({ id: newUser.id }, process.env.JWT_SECRET, {
-          expiresIn: "1h",
-        });
+        const token = jwt.sign(
+          { id: newUser.id, email: newUser.email },
+          process.env.JWT_SECRET,
+          {
+            expiresIn: "1h",
+          }
+        );
 
         return {
           id: newUser.id,
@@ -114,9 +118,13 @@ const Mutation = new GraphQLObjectType({
         }
 
         // Generate JWT token
-        const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET, {
-          expiresIn: "1h",
-        });
+        const token = jwt.sign(
+          { id: user.id, email: user.email },
+          process.env.JWT_SECRET,
+          {
+            expiresIn: "1h",
+          }
+        );
 
         return {
           id: user.id,
@@ -139,10 +147,17 @@ const Mutation = new GraphQLObjectType({
           throw new Error("Hotel not found");
         }
 
+        const date = new Date(booking_date);
+
+        const day = String(date.getDate()).padStart(2, "0"); // Ensure day is 2 digits
+        const month = String(date.getMonth() + 1).padStart(2, "0"); // Months are zero-indexed
+        const year = String(date.getFullYear()).slice(2); // Extract last 2 digits of the year
+
         // Check if a booking already exists for this hotel_id and booking_date
         const existingBooking = await Booking.findOne({
           hotel_id,
-          booking_date: new Date(booking_date),
+          email,
+          booking_date: `${day}-${month}-${year}`,
         });
 
         if (existingBooking) {
@@ -153,7 +168,7 @@ const Mutation = new GraphQLObjectType({
         const booking = new Booking({
           hotel_id,
           email,
-          booking_date: new Date(booking_date),
+          booking_date: `${day}-${month}-${year}`,
           chain_name: hotel.chain_name,
           hotel_name: hotel.hotel_name,
           city: hotel.city,
@@ -188,7 +203,7 @@ const RootQuery = new GraphQLObjectType({
         return Booking.find();
       },
     },
-     hotels: {
+    hotels: {
       type: new GraphQLList(HotelType), // Returning a list of hotels
       resolve() {
         return Hotel.find(); // Fetch all hotels from MongoDB
