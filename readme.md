@@ -48,13 +48,7 @@ Ensure you have the following installed on your system:
 
 4.  **Start the Application**:
 
-    -   In development mode:
-
-        ```
-        yarn dev
-        ```
-
-    -   In production mode:
+    -   In production/dev mode:
 
         ```
         yarn start
