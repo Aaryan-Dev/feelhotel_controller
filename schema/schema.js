@@ -50,6 +50,17 @@ const BookingType = new GraphQLObjectType({
     hotel_id: { type: GraphQLInt },
     email: { type: GraphQLString },
     booking_date: { type: GraphQLString },
+    chain_name: { type: GraphQLString },
+    hotel_name: { type: GraphQLString },
+    city: { type: GraphQLString },
+    country: { type: GraphQLString },
+    star_rating: { type: GraphQLFloat },
+    latitude: { type: GraphQLFloat },
+    longitude: { type: GraphQLFloat },
+    photo1: { type: GraphQLString },
+    overview: { type: GraphQLString },
+    rates_from: { type: GraphQLInt },
+    rates_currency: { type: GraphQLString },
   }),
 });
 
@@ -207,6 +218,19 @@ const RootQuery = new GraphQLObjectType({
       type: new GraphQLList(HotelType), // Returning a list of hotels
       resolve() {
         return Hotel.find(); // Fetch all hotels from MongoDB
+      },
+    },
+    getBookedHotels: {
+      type: new GraphQLList(BookingType),
+      args: {
+        email: { type: new GraphQLNonNull(GraphQLString) },
+      },
+      resolve: async (_, { email }) => {
+        const bookings = await Booking.find({ email });
+        if (!bookings || bookings.length === 0) {
+          throw new Error("No bookings found for this email");
+        }
+        return bookings;
       },
     },
   },
