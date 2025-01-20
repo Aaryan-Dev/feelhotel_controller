@@ -1,0 +1,34 @@
+version: '3.9'
+
+services:
+  app:
+    image: node:18
+    container_name: feelhotel_controller_app
+    working_dir: /usr/src/app
+    volumes:
+      - .:/usr/src/app
+      - /usr/src/app/node_modules
+    ports:
+      - "4000:4000" # Application port
+    command: sh -c "yarn install && yarn start"
+    environment:
+      - NODE_ENV=development
+      - PORT=4000
+      - MONGO_URI=mongodb+srv://aryandev:WJC4yWYNuvNoF3D5@feelhotel.7ggun.mongodb.net/?retryWrites=true&w=majority&appName=feelhotel
+      - JWT_SECRET=asod@(^&9s19)*(&HW!(0))!@S!)(H)HU)!)SH(U}{>"Æ:{}"})
+    depends_on:
+      - db
+
+  db:
+    image: mongo:6
+    container_name: feelhotel_mongo
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: admin
+      MONGO_INITDB_ROOT_PASSWORD: password
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo-data:/data/db
+
+volumes:
+  mongo-data:
