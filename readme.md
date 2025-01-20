@@ -41,9 +41,9 @@ Ensure you have the following installed on your system:
     -   Add the necessary environment variables. Example:
 
         ```
-        PORT=3000
-        DB_URI=mongodb://localhost:27017/feelhotel
-        JWT_SECRET=your_secret_key
+        MONGO_URI=mongodb+srv://aryandev:WJC4yWYNuvNoF3D5@feelhotel.7ggun.mongodb.net/?retryWrites=true&w=majority&appName=feelhotel
+        JWT_SECRET=asod@(^&9s19)*(&HW!(0))!@S!)(H)HU)!)SH(U}{>"Æ:{}"})
+        PORT=4000
         ```
 
 4.  **Start the Application**:
@@ -54,7 +54,7 @@ Ensure you have the following installed on your system:
         yarn start
         ```
 
-5.  **Access the Application**: The application will be available at `http://localhost:<PORT>` (default is `3000`).
+5.  **Access the Application**: The application will be available at `http://localhost:<PORT>` (default is `4000`).
 
 * * * * *
 
